@@ -1,0 +1,181 @@
+@charset "UTF-8";
+
+html
+{
+    height: 100%;
+}
+
+body
+{
+    font-size: 80%;
+    font-family: verdana, geneva, sans-serif;
+    height: 100%;
+    color: #747474;
+}
+
+h1
+{
+    font-size: 1.6em; /* 16 pt */
+    font-weight: bold;
+}
+
+h2
+{
+    font-size: 1.4em; /* 14 pt */
+    font-weight: bold;
+}
+
+h3
+{
+    font-size: 1.2em; /* 12 pt */
+    font-weight: bold;
+}
+
+p, ul, ol, dl, table
+{
+    font-size: 1em; /* 10 pt */
+}
+
+em
+{
+    font-style: italic;
+}
+
+strong
+{
+    font-weight: bold;
+}
+
+a:link
+{
+
+}
+
+a:visited
+{
+
+}
+
+a:hover
+{
+
+}
+
+a:active
+{
+
+}
+
+#container
+{
+    width: 1010px;
+    margin: 0 auto;
+    height: 100%;
+    position: relative;
+}
+
+#mid-container
+{
+    width: 1010px;
+    margin: 0 auto;
+    height: 400px;
+    position: relative;
+}
+
+#header
+{
+    width: 998px;
+    margin: 30px 5px;
+    border-style: solid;
+    border-color: #747474;
+    border-width: 1px;
+    position: relative;
+    text-align: center;
+    background-color: #F2F2F2;
+}
+
+#temperature
+{
+    width: 1000px;
+    height: 500px;
+    margin: 5px;
+    position: relative;
+    background-color: white;
+}
+
+#navigation
+{
+    width: 1000px;
+    height: 100px;
+    margin: 30px 5px;
+    position: relative;
+    background-color: white;
+    font-size: 0.8em;
+}
+
+#left-header
+{
+    width: 495px;
+    margin: 30px 0 30px 5px;
+    border-style: solid;
+    border-color: #747474;
+    border-width: 1px;
+    position: relative;
+    float: left;
+    text-align: center;
+    background-color: #F2F2F2;
+}
+
+#right-header
+{
+    width: 495px;
+    margin: 30px 5px 30px 0;
+    border-style: solid;
+    border-color: #747474;
+    border-width: 1px;
+    position: relative;
+    float: right;
+    text-align: center;
+    background-color: #F2F2F2;
+}
+
+#humidity
+{
+    width: 497px;
+    height: 250px;
+    margin: 0 0 0 5px;
+    position: relative;
+    float: left;
+    background-color: white;
+    font-size: 0.8em;
+}
+
+#miscellany
+{
+    width: 497px;
+    height: 250px;
+    margin: 0 5px 0 0;
+    position: relative;
+    float: right;
+    background-color: white;
+    font-size: 0.8em;
+}
+
+#energy
+{
+    width: 1000px;
+    height: 500px;
+    margin: 5px;
+    position: relative;
+    background-color: white;
+}
+
+#energynav
+{
+    width: 1000px;
+    height: 100px;
+    margin: 30px 5px;
+    position: relative;
+    background-color: white;
+    font-size: 0.8em;
+}
