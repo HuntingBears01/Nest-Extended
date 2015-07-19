@@ -63,10 +63,6 @@
 				{color: "#848484", data: nullify(getSeries(fulldata, "high_target_temp"))},
 				{label: "Heat On", color: "#FF0000", yaxis: 2, lines: {lineWidth: 0, fill: .30},
 					data: nullify(getSeries(fulldata, "heat_on"))},
-				{label: "AC On", color: "#0000FF", yaxis: 2, lines: {lineWidth: 0, fill: .30},
-					data: nullify(getSeries(fulldata, "ac_on"))},
-				{label: "Fan On", color: "#FFFF00", yaxis: 2, lines: {lineWidth: 0, fill: .30},
-					data: nullify(getSeries(fulldata, "fan_on"))},
 				{label: "Away Mode", color: "#000000", yaxis: 2, lines: {lineWidth: 0, fill: .30},
 					data: nullify(getSeries(fulldata, "away_status"))},
 				{label: "Leaf Earning", color: "#00FF00", yaxis: 2, lines: {lineWidth: 0, fill: .30},
@@ -76,7 +72,7 @@
 			var tempoptions = {
 				xaxes: [{
 					mode: "time",
-					timeformat: "%m/%d/%Y %H:%M",
+					timeformat: "%d/%m/%Y %H:%M",
 					timezone: "browser",
 					min: yesterdaytime,
 					max: currenttime
@@ -88,7 +84,7 @@
 					max: 1
 				}],
 				legend: {
-					noColumns: 4,
+					noColumns: 3,
 					position: "nw"
 				},
 				grid: {
@@ -109,7 +105,7 @@
 				},
 				xaxes: [{
 					mode: "time",
-					timeformat: "%m/%d/%Y",
+					timeformat: "%d/%m/%Y",
 					timezone: "browser",
 				}],
 				yaxes: [{
@@ -119,14 +115,13 @@
 
 			humiddata = [
 				{label: "Outside Humidity", color: "#D7DF01", data: getSeries(fulldata, "outside_humidity")},
-				{label: "Target Humidity",  color: "#5882FA", data: getSeries(fulldata, "target_humidity")},
 				{label: "Current Humidity", color: "#0B0B61", data: getSeries(fulldata, "current_humidity")},
 			];
 
 			var humidoptions = {
 				xaxes: [{
 					mode: "time",
-					timeformat: "%m/%d %H:%M",
+					timeformat: "%d/%m %H:%M",
 					timezone: "browser",
 					min: yesterdaytime,
 					max: currenttime
@@ -154,7 +149,7 @@
 			var miscoptions = {
 				xaxes: [{
 					mode: "time",
-					timeformat: "%m/%d %H:%M",
+					timeformat: "%d/%m %H:%M",
 					timezone: "browser",
 					min: yesterdaytime,
 					max: currenttime
@@ -188,31 +183,24 @@
 			function summary(o) {
 				var t = fulldata["timestamp"];
 				var heating = 0; // Heating time in seconds
-				var cooling = 0; // Cooling time in seconds
 				for (index = 0; index < t.length; index++) {
 					if ((o.start <= 1000*t[index]) && (1000*t[index] <= o.end)) {
 						heating += fulldata["total_heating_time"][index];
-						cooling += fulldata["total_cooling_time"][index];
 					}
 				}
 				$("#heating").text(heating/3600);
-				$("#cooling").text(cooling/3600);
 				$("#days").text((o.end - o.start)/86400000);
 			}
 
 			var energyGraph = $.plot("#energy", [
 				{label: "Heating Time", color: "#300000",
 					data: getSeries(fulldata, "total_heating_time")},
-				{label: "Cooling Time", color: "#000030",
-					data: getSeries(fulldata, "total_cooling_time")},
 				{label: "Heat Degree Days", color: "#800000", yaxis: 2,
 					data: nullify(getSeries(fulldata, "heating_degree_days"))},
-				{label: "Cool Degree Days", color: "#000080", yaxis: 2,
-					data: nullify(getSeries(fulldata, "cooling_degree_days"))},
 				], {
 				xaxes: [{
 					mode: "time",
-					timeformat: "%m/%d/%Y",
+					timeformat: "%d/%m/%Y",
 					min: initSpan.start,
 					max: initSpan.end
 				}],
@@ -227,8 +215,7 @@
 			});
 
 		$.plot("#energynav",
-				[{color: "#800000", data: nullify(getSeries(fulldata, "heating_degree_days"))},
-				 {color: "#000080", data: nullify(getSeries(fulldata, "cooling_degree_days"))}],
+				[{color: "#800000", data: nullify(getSeries(fulldata, "heating_degree_days"))}],
 				{rangeselection:{
 					color: "#feb",
 					start: initSpan.start,
@@ -246,7 +233,7 @@
 				},
 				xaxes: [{
 					mode: "time",
-					timeformat: "%m/%d/%Y",
+					timeformat: "%d/%m/%Y",
 					timezone: "browser",
 				}],
 				yaxes: [{
@@ -277,7 +264,7 @@
 <div style="width:1000px">ENERGY</div>
 <div id="energynav" style="width:1000px;height:100px;"></div>
 <div id="energy" style="width:1000px;height:500px;"></div>
-Displaying <span id="heating">heat</span> heating hours, <span id="cooling">cool</span> cooling hours for <span id="days">number</span> days.
+Displaying <span id="heating">heat</span> heating hours for <span id="days">number</span> days.
 </div>
 </body>
 </html>
