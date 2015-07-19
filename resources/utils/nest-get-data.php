@@ -36,7 +36,11 @@ if ($datatype === 'current'){
 	//Capture date and time of script execution
 	$runTime = $date = date('Y-m-d H:i:s');
 
-	//Used to return current inside temperature, current inside humidity, current mode, target temperature, time to target temperature, current heat state, current ac state
+    //Used to get current outdoor weather
+    $weather_json = file_get_contents('http://api.wunderground.com/api/'.$wu_api_key.'/conditions/pws:'.$use_pws.'/q/'.$wu_loc.'.json');
+    $weather=json_decode($weather_json); 
+ 
+    //Used to return current inside temperature, current inside humidity, current mode, target temperature, time to target temperature, current heat state, current ac state
 	$infos = $nest->getDeviceInfo();
 
 	//If the target temperature is an array, we need to deal with that.
@@ -62,7 +66,7 @@ if ($datatype === 'current'){
 	}
 	
 	//Insert Current Values into Nest Database Table
-	$sql = 'INSERT INTO nest (log_datetime, location, outside_temp, outside_humidity, away_status, leaf_status, current_temp, current_humidity, temp_mode, low_target_temp, high_target_temp, time_to_target, target_humidity, heat_on, humidifier_on, ac_on, fan_on, battery_level, is_online) VALUES ("'.$runTime.'", "'.$postal_code.'", "'.$locations[0]->outside_temperature.'", "'.$locations[0]->outside_humidity.'", "'.$locations[0]->away.'", "'.$infos->current_state->leaf.'", "'.$infos->current_state->temperature.'", "'.$infos->current_state->humidity.'", "'.$infos->current_state->mode.'", "'.$low_target_temp.'", "'.$high_target_temp.'", "'.$infos->target->time_to_target.'","'.$infos->target->humidity.'","'.$infos->current_state->heat.'","'.$infos->current_state->humidifier.'","'.$infos->current_state->ac.'","'.$infos->current_state->fan.'","'.$infos->current_state->battery_level.'","'.$infos->network->online.'")';
+	$sql = 'INSERT INTO nest (log_datetime, location, outside_temp, outside_humidity, away_status, leaf_status, current_temp, current_humidity, temp_mode, low_target_temp, high_target_temp, time_to_target, target_humidity, heat_on, humidifier_on, ac_on, fan_on, battery_level, is_online) VALUES ("'.$runTime.'", "'.$postal_code.'", "'.$weather->current_observation->temp_c.'", "'.$weather->current_observation->relative_humidity.'", "'.$locations[0]->away.'", "'.$infos->current_state->leaf.'", "'.$infos->current_state->temperature.'", "'.$infos->current_state->humidity.'", "'.$infos->current_state->mode.'", "'.$low_target_temp.'", "'.$high_target_temp.'", "'.$infos->target->time_to_target.'","'.$infos->target->humidity.'","'.$infos->current_state->heat.'","'.$infos->current_state->humidifier.'","'.$infos->current_state->ac.'","'.$infos->current_state->fan.'","'.$infos->current_state->battery_level.'","'.$infos->network->online.'")';
 	$result = $con->query($sql) or trigger_error('SQL: ' . $sql . ' Error: ' . $con->error, E_USER_ERROR);
 
 	//Set the humidity level if enabled.
@@ -83,7 +87,7 @@ elseif ($datatype === 'daily') {
 	$energy = $nest->getEnergyLatest();
 
 	//Used to get yesterday's weather
-	$weather_json = file_get_contents('http://api.wunderground.com/api/'.$wu_api_key.'/yesterday/q/'.rawurlencode($postal_code).'.json');
+	$weather_json = file_get_contents('http://api.wunderground.com/api/'.$wu_api_key.'/yesterday/q/'.$wu_loc.'.json');
 	$weather=json_decode($weather_json);
 	$yesterday_date = date("Y-m-d", time() - 60 * 60 * 24);
 
