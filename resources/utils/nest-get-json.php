@@ -16,7 +16,7 @@ case 'current':
 	$cutoff->sub(new DateInterval('P1M'));
 	$cutoff_ = $cutoff->format('Y-m-d');
 
-	$sql = "SELECT UNIX_TIMESTAMP(log_datetime) as timestamp, outside_temp, outside_humidity, away_status, leaf_status, current_temp, current_humidity, low_target_temp, high_target_temp, target_humidity, heat_on, humidifier_on, ac_on, fan_on, battery_level, is_online FROM nest WHERE log_datetime >= '$cutoff_' ORDER BY log_datetime";
+	$sql = "SELECT UNIX_TIMESTAMP(log_datetime) as timestamp, outside_temp, outside_humidity, away_status, leaf_status, current_temp, current_humidity, low_target_temp, high_target_temp, target_humidity, heat_on, humidifier_on, ac_on, fan_on, battery_level, is_online FROM nest WHERE log_datetime >= '$cutoff_' AND outside_humidity != 0 ORDER BY log_datetime";
 	break;
 
 case 'daily':
@@ -24,7 +24,7 @@ case 'daily':
 	$cutoff->sub(new DateInterval('P6M'));
 	$cutoff_ = $cutoff->format('Y-m-d');
 
-	$sql = "SELECT UNIX_TIMESTAMP(date) as timestamp, total_heating_time/3600 AS total_heating_time, total_cooling_time, CASE WHEN total_heating_time=0 then 0 ELSE heating_degree_days-3 END AS heating_degree_days, cooling_degree_days FROM energy_reports WHERE date >= '$cutoff_'";
+	$sql = "SELECT UNIX_TIMESTAMP(date) as timestamp, total_heating_time / 3600 AS total_heating_time, total_cooling_time, CASE WHEN total_heating_time = 0 THEN 0 ELSE heating_degree_days - 3 END AS heating_degree_days, cooling_degree_days FROM energy_reports WHERE date >= '$cutoff_'";
 	break;
 }
 
