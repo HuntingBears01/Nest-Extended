@@ -58,8 +58,8 @@
 
 		$.getJSON('resources/utils/nest-get-json.php?datatype=current', function(fulldata) {
 			var tempdata = [
-				{label: "Outside", color: "#DF7401", data: getSeries(fulldata, "outside_temp")},
-				{label: "Inside", color: "#B40404", data: getSeries(fulldata, "current_temp")},
+				{label: "Outside", color: "#FF6600", data: getSeries(fulldata, "outside_temp")},
+				{label: "Inside", color: "#CC0000", data: getSeries(fulldata, "current_temp")},
 				{label: "Target", color: "#848484", data: getSeries(fulldata, "low_target_temp")},
 				{color: "#848484", data: nullify(getSeries(fulldata, "high_target_temp"))},
 				{label: "Heating", color: "#FF0000", yaxis: 2, lines: {lineWidth: 0, fill: .15},
@@ -78,11 +78,14 @@
 					min: yesterdaytime,
 					max: currenttime
 				}],
-				yaxes: [{
+                yaxes: [{
+                    tickDecimals: 1,
+                    min: -10,
+                    max: 30
 				}, {
 					show: false,
 					min: 0,
-					max: 1
+                    max: 1,
 				}],
 				legend: {
 					noColumns: 3,
@@ -114,7 +117,9 @@
 					timezone: "browser",
 				}],
 				yaxes: [{
-					show: false
+                    show: false,
+                    min: -10,
+                    max: 30
 				}],
 			});
 
@@ -126,7 +131,7 @@
 			var humidoptions = {
 				xaxes: [{
 					mode: "time",
-					timeformat: "%d/%m %H:%M",
+					timeformat: "%d/%m/%Y %H:%M",
 					timezone: "browser",
 					min: yesterdaytime,
 					max: currenttime
@@ -158,12 +163,13 @@
 			var miscoptions = {
 				xaxes: [{
 					mode: "time",
-					timeformat: "%d/%m %H:%M",
+					timeformat: "%d/%m/%Y %H:%M",
 					timezone: "browser",
 					min: yesterdaytime,
 					max: currenttime
 				}],
-				yaxes: [{
+                yaxes: [{
+                    tickDecimals: 2
 				}, {
 					show: false,
 					min: 0,
@@ -206,9 +212,9 @@
 			}
 
 			var energyGraph = $.plot("#energy", [
-				{label: "Heating Time", color: "#300000",
+				{label: "Heating Hours", color: "#990000",
 					data: getSeries(fulldata, "total_heating_time")},
-				{label: "Heat Degree Days", color: "#800000", yaxis: 2,
+				{label: "Heating Degree Days", color: "#660066", yaxis: 2,
                     data: nullify(getSeries(fulldata, "heating_degree_days"))},
 				], {
 				xaxes: [{
@@ -216,9 +222,17 @@
 					timeformat: "%d/%m/%Y",
 					min: initSpan.start,
 					max: initSpan.end
-				}],
+                }],
+                yaxes: [{
+                    tickDecimals: 2,
+                    min: 0,
+                    max: 8
+                }, {
+                    min: 0,
+                    max: 40
+                }],
 				legend: {
-					noColumns: 2,
+					noColumns: 1,
 					position: "nw"
 				},
                 lines: {
@@ -234,13 +248,13 @@
 				},
 				tooltip:true,
                 tooltipOpts: {
-                    content: "%s: %y Minutes on %x",
+                    content: "%s: %y on %x",
                     xDateFormat: "%d/%m/%Y"
                 }
 			});
 
 		$.plot("#energynav",
-				[{color: "#800000", data: nullify(getSeries(fulldata, "heating_degree_days"))}],
+				[{color: "#660066", data: nullify(getSeries(fulldata, "heating_degree_days"))}],
 				{rangeselection:{
 					color: "#feb",
 					start: initSpan.start,
@@ -262,7 +276,9 @@
 					timezone: "browser",
 				}],
 				yaxes: [{
-					show: false
+                    show: false,
+                    min: 0,
+                    max: 40
 				}],
 			});
 			summary(initSpan);
