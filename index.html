@@ -198,17 +198,19 @@
 		var lastmonth = currenttime - 30*86400000;
 		var initSpan = {start: lastmonth, end: currenttime};
 
-		$.getJSON('resources/utils/nest-get-json.php?datatype=daily', function(fulldata) {
+        $.getJSON('resources/utils/nest-get-json.php?datatype=daily', function(fulldata) {
 			function summary(o) {
 				var t = fulldata["timestamp"];
-				var heating = 0; // Heating time in seconds
+				var heating = 0; // Heating time in hours
 				for (index = 0; index < t.length; index++) {
 					if ((o.start <= 1000*t[index]) && (1000*t[index] <= o.end)) {
 						heating += fulldata["total_heating_time"][index];
 					}
 				}
-				$("#heating").text(heating/3600);
-				$("#days").text((o.end - o.start)/86400000);
+                var heathours = Math.round(heating * 10) / 10;
+                var heatdays = Math.round((o.end - o.start) / 86400000 * 10) / 10;
+                $("#heating").text(heathours);
+				$("#days").text(heatdays);
 			}
 
 			var energyGraph = $.plot("#energy", [
@@ -318,6 +320,7 @@
         </div>
         <div id="header">
             <h1>DAILY ENERGY USAGE</h1>
+            <p><span id="heating"></span> hours of heating over <span id="days"></span> days</p>
         </div>
         <div id="energy">
             <!-- energy graph -->
