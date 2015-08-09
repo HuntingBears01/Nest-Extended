@@ -59,8 +59,8 @@
 		$.getJSON('resources/utils/nest-get-json.php?datatype=current', function(fulldata) {
 			var tempdata = [
 				{label: "Outside", color: "#FF6600", data: getSeries(fulldata, "outside_temp")},
-				{label: "Inside", color: "#CC0000", data: getSeries(fulldata, "current_temp")},
-				{label: "Target", color: "#848484", data: getSeries(fulldata, "low_target_temp")},
+				{label: "Inside", color: "#CC0000", data: nullify(getSeries(fulldata, "current_temp"))},
+				{label: "Target", color: "#848484", data: nullify(getSeries(fulldata, "low_target_temp"))},
 				{color: "#848484", data: nullify(getSeries(fulldata, "high_target_temp"))},
 				{label: "Heating", color: "#FF0000", yaxis: 2, lines: {lineWidth: 0, fill: .15},
 					data: nullify(getSeries(fulldata, "heat_on"))},
@@ -124,8 +124,8 @@
 			});
 
 			humiddata = [
-				{label: "Outside", color: "#D7DF01", data: getSeries(fulldata, "outside_humidity")},
-				{label: "Inside", color: "#0B0B61", data: getSeries(fulldata, "current_humidity")},
+				{label: "Outside", color: "#D7DF01", data: nullify(getSeries(fulldata, "outside_humidity"))},
+				{label: "Inside", color: "#0B0B61", data: nullify(getSeries(fulldata, "current_humidity"))},
 			];
 
 			var humidoptions = {
@@ -155,7 +155,7 @@
 			humidGraph = $.plot("#humidity",humiddata,humidoptions);
 
 			miscdata = [
-				{label: "Battery", color: "#088A08", data: getSeries(fulldata, "battery_level")},
+				{label: "Battery", color: "#088A08", data: nullify(getSeries(fulldata, "battery_level"))},
 				{label: "Online",  yaxis: 2, lines: {lineWidth: 0, fill: .50, shadowSize: 0},
 					data: nullify(getSeries(fulldata, "is_online"))},
 			];
@@ -169,7 +169,9 @@
 					max: currenttime
 				}],
                 yaxes: [{
-                    tickDecimals: 2
+                    tickDecimals: 2,
+                    min: 0,
+                    max: 5
 				}, {
 					show: false,
 					min: 0,

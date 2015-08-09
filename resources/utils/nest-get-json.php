@@ -16,7 +16,8 @@ case 'current':
 	$cutoff->sub(new DateInterval('P1M'));
 	$cutoff_ = $cutoff->format('Y-m-d');
 
-	$sql = "SELECT UNIX_TIMESTAMP(log_datetime) as timestamp, outside_temp, outside_humidity, away_status, leaf_status, current_temp, current_humidity, low_target_temp, high_target_temp, target_humidity, heat_on, humidifier_on, ac_on, fan_on, battery_level, is_online FROM nest WHERE log_datetime >= '$cutoff_' AND outside_humidity != 0 ORDER BY log_datetime";
+    // Exclude bad Weather Underground readings (humidity = 0)
+    $sql = "SELECT UNIX_TIMESTAMP(log_datetime) as timestamp, outside_temp, outside_humidity, away_status, leaf_status, current_temp, current_humidity, low_target_temp, high_target_temp, target_humidity, heat_on, humidifier_on, ac_on, fan_on, battery_level, is_online FROM nest WHERE log_datetime >= '$cutoff_' AND outside_humidity != 0 ORDER BY log_datetime";
 	break;
 
 case 'daily':
