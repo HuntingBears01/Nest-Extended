@@ -215,9 +215,9 @@
 
 			var energyGraph = $.plot("#energy", [
 				{label: "Heating Hours", color: "#990000",
-					data: getSeries(fulldata, "total_heating_time")},
+					data: (getSeries(fulldata, "total_heating_time"))},
 				{label: "Heating Degree Days", color: "#660066", yaxis: 2,
-                    data: nullify(getSeries(fulldata, "heating_degree_days"))},
+                    data: (getSeries(fulldata, "heating_degree_days"))},
 				], {
 				xaxes: [{
 					mode: "time",
@@ -256,7 +256,7 @@
 			});
 
 		$.plot("#energynav",
-				[{color: "#660066", data: nullify(getSeries(fulldata, "heating_degree_days"))}],
+				[{color: "#660066", data: (getSeries(fulldata, "heating_degree_days"))}],
 				{rangeselection:{
 					color: "#feb",
 					start: initSpan.start,
