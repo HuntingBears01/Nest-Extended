@@ -295,16 +295,28 @@
 </head>
 <body>
     <div id="container">
-        <div id="header">
-            <h1>TEMPERATURE</h1>
+        <div id="energy-container">
+            <div id="header">
+                <h1>DAILY ENERGY USAGE</h1>
+                <p><span id="heating"></span> hours of heating over <span id="days"></span> days</p>
+            </div>
+            <div id="energy">
+                <!-- energy graph -->
+            </div>
+            <div id="energynav">
+                <!-- temperature navigation -->
+            </div>
         </div>
-        <div id="temperature">
-            <!-- temperature graph -->
-        </div>
-        <div id="navigation">
-            <!-- temperature navigation -->
-        </div>
-        <div id="mid-container">
+        <div id="temperature-container">
+            <div id="header">
+                <h1>TEMPERATURE</h1>
+            </div>
+            <div id="temperature">
+                <!-- temperature graph -->
+            </div>
+            <div id="navigation">
+                <!-- temperature navigation -->
+            </div>
             <div id="left-header">
                 <h2>HUMIDITY</h2>
             </div>
@@ -317,16 +329,6 @@
             <div id="miscellany">
                 <!-- nest graph -->
             </div>
-        </div>
-        <div id="header">
-            <h1>DAILY ENERGY USAGE</h1>
-            <p><span id="heating"></span> hours of heating over <span id="days"></span> days</p>
-        </div>
-        <div id="energy">
-            <!-- energy graph -->
-        </div>
-        <div id="energynav">
-            <!-- temperature navigation -->
         </div>
     </div>
 </body>

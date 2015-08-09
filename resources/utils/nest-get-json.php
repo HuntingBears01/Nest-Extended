@@ -24,7 +24,9 @@ case 'daily':
 	$cutoff->sub(new DateInterval('P6M'));
 	$cutoff_ = $cutoff->format('Y-m-d');
 
-	$sql = "SELECT UNIX_TIMESTAMP(date) as timestamp, total_heating_time / 3600 AS total_heating_time, total_cooling_time, CASE WHEN total_heating_time = 0 THEN 0 ELSE heating_degree_days - 3 END AS heating_degree_days, cooling_degree_days FROM energy_reports WHERE date >= '$cutoff_'";
+    // Reduce heating_degree_days by 3 to convert from US to EU standard
+    // 0 heating_degree_days doesn't display so use 0.0001 instead (Tooltip still shows 0)
+	$sql = "SELECT UNIX_TIMESTAMP(date) as timestamp, total_heating_time / 3600 AS total_heating_time, total_cooling_time, CASE WHEN heating_degree_days BETWEEN 1 AND 3 THEN 0.0001 ELSE heating_degree_days - 3 END AS heating_degree_days, cooling_degree_days FROM energy_reports WHERE date >= '$cutoff_'";
 	break;
 }
 
