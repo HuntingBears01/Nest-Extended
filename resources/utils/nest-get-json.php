@@ -4,6 +4,7 @@ require_once('../config.php');
 
 //Connect to the Database.
 $con = new mysqli($hostname, $username, $password, $dbname);
+$sql = "set time_zone='Europe/London';";
 if ($con->connect_error) {
 	trigger_error('Database connection failed: ' . $con->connect_error, E_USER_ERROR);
 }
